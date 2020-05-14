@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>BUBBLE BURST</title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="game.css">
+
+  </head>
+  <body onload="start()">
+    <div class="container">
+      <div class="item">SCORE :<span id="t">0.00</span></div>
+      <div class="item">DANGER ZONE :<span id="dt">0</span></div>
+      <div class="item" onclick="pause()" id="pause">PAUSE</div>
+    </div>
+    <canvas id="canvas" ></canvas>
+    <p id="try" onclick="location.reload()">TRY AGAIN!</p>
+
+
+
+    <script src="game.js" charset="utf-8"></script>
+
+  </body>
+</html>

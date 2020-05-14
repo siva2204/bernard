@@ -1,0 +1,64 @@
+
+body{
+  background-image: url('game/bg.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  width:100%;
+  background-position: center center;
+  margin: 0;
+  padding: 0;
+
+}
+h1{
+  font-weight: bolder;
+  text-align: center;
+  font-family: 'Cabin Sketch', cursive;
+
+  color:white;
+  font-size: 100px;
+  margin-bottom: 0px;
+}
+
+h2{
+  font-weight: bolder;
+  text-align: center;
+  font-family: 'Cabin Sketch', cursive;
+  margin-top: 0px;
+
+  color:white;
+  font-size: 50px;
+
+}
+
+p{
+  text-align: center;
+  font-weight: bolder;
+  font-size: 20px;
+  font-family: 'Luckiest Guy', cursive;
+  color: #4da6ff;
+  letter-spacing: 1px;
+}
+
+.btn{
+  position: relative;
+  top: 200px;
+  text-align: center;
+}
+a{
+  text-align: center;
+  padding:3px 15px;
+  font-size: 60px;
+  font-weight: bolder;
+  border:2px solid #4da6ff;
+  border-radius: 3px;
+  font-family: 'Cabin Sketch', cursive;
+  color: #4da6ff;
+  text-decoration: none;
+}
+
+a:hover{
+  color: white;
+  background-color: #4da6ff;
+  cursor: pointer;
+}

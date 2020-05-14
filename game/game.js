@@ -82,7 +82,7 @@ function stopwatch1(){
 }
 //start
 function start() {
-  interval=window.setInterval(addbubble,550);
+  interval=window.setInterval(addbubble,500);
   interval2=window.setInterval(stopwatch1,1000);
 
 
@@ -103,7 +103,7 @@ function pause() {
 
   }
   else {
-   interval=window.setInterval(addbubble,550);
+   interval=window.setInterval(addbubble,500);
    interval1=window.setInterval(stopwatch,1000);
    interval2=window.setInterval(stopwatch1,1000);
    document.getElementById("pause").innerHTML="PAUSE";

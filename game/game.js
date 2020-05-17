@@ -90,6 +90,7 @@ function start() {
 //addbubble
 function addbubble(){
   newbubble();
+  speed+=0.25;
 }
 //pause
 function pause() {
@@ -165,7 +166,7 @@ function resolveCollision(particle, otherParticle) {
 // new BUBBLE
 function newbubble() {
   if (particles.length<20) {
-    var radius =getRandomNumber(40,50);
+    var radius =getRandomNumber(40,60);
     var x = getRandomNumber(radius,canvas.width-radius);
     var y = getRandomNumber(radius,canvas.height-radius);
     //getRandomNumber(60,70);
@@ -194,14 +195,15 @@ function newbubble() {
 
 
 // Objects
+var speed=4
 function Particle(x, y, radius, color) {
  this.x = x;
  this.y = y;
  this.radius = radius;
  this.color = color;
  this.velocity = {
- x: (Math.random() - 0.5)*8, // Random x value from -0.5 to 0.5
- y: (Math.random() - 0.5)*8 // Random y value from -0.5 to 0.5
+ x: (Math.random() - 0.5)*speed, // Random x value from -0.5 to 0.5
+ y: (Math.random() - 0.5)*speed // Random y value from -0.5 to 0.5
  }
  this.mass=1;
  this.update=function(particles) {
@@ -269,6 +271,20 @@ function init() {
  particles.push(new Particle(x, y, radius, color));
  }
 }
+//localstorage
+var recordtimes1=[];
+
+recordtimes1=JSON.parse(localStorage.getItem("times"));
+ if (recordtimes1!=null) {
+   recordtimes1.sort();
+   
+     document.getElementById("hs").innerHTML=recordtimes1[recordtimes1.length-1];
+
+ }
+
+
+
+
 //danger ZONE
 function dangerzone() {
   if (particles.length==20) {
@@ -313,6 +329,16 @@ function gameover() {
   window.clearInterval(interval2);
   document.getElementById("try").style.visibility="visible";
   gamepause=true;
+  if (recordtimes1==null) {
+          recordtimes1=[];  
+        recordtimes1[recordtimes1.length]=document.getElementById('t').innerHTML;
+        localStorage.setItem("times",JSON.stringify(recordtimes1));
+    }
+  else{
+          recordtimes1[recordtimes1.length]=document.getElementById('t').innerHTML;
+          localStorage.setItem("times",JSON.stringify(recordtimes1));
+    }
+      document.getElementById("hs").innerHTML=recordtimes1[recordtimes1.length-1];
 
 
   c.drawImage(img,0,0,800,600);

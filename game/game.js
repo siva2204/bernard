@@ -51,37 +51,32 @@ canvas.addEventListener("click",function() {
 
     }
   }
+  
+});
+
+canvas.addEventListener("click",function () {
   for (var i = 0; i < gaunlet.length; i++) {
-    if (distancebwpoints(gaunlet[i].x,gaunlet[i].x,mouse.x,mouse.y)<100 && mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y ) {
-       gaunlet.splice(i,1);
-    }
+      if (mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y) {
+        if(distancebwpoints(gaunlet[i].x,gaunlet[i].y,mouse.x,mouse.y)<75){
+          gaunlet.splice(i,1);
+          c.save();
+          c.fillStyle="white";
+          c.fillRect(0,0,canvas.width,canvas.height);
+          c.fill();
+
+          c.restore();
+          particles.splice(0,particles.length/2);
+          rockbubble.splice(0,rockbubble.length/2);
+
+        } 
+
+      }
+      
   }
+ 
 
-});
-
-canvas.addEventListener("ontouchend",function() {
-  for (var i = 0; i < particles.length; i++) {
-       if (distancebwpoints(particles[i].x,particles[i].y,mouse.x,mouse.y)<particles[i].radius) {
-           particles.splice(i,1);
-           beep.play();
-
-       }
-  }
-  for (var i = 0; i < rockbubble.length; i++) {
-    if (distancebwpoints(rockbubble[i].x,rockbubble[i].y,mouse.x,mouse.y)<135 && mouse.x>rockbubble[i].x && mouse.y>rockbubble[i].y) {
-      rockbubble[i].click++;
-      beep.play();
-
-    }
-  }
-   for (var i = 0; i < gaunlet.length; i++) {
-    if (distancebwpoints(gaunlet[i].x,gaunlet[i].x,mouse.x,mouse.y)<100 && mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y ) {
-       gaunlet.splice(i,1);
-    }
-  }
-
-
-});
+  
+})
 
 //random numbers
 function getRandomNumber(min, max) {
@@ -328,7 +323,7 @@ function initrb() {
 
     rockbubble.push(new Rockbubble(sx,sy));
     time+=8;
-    if (time>60) {
+    if (time==60) {
       time=0;
     }
 
@@ -344,23 +339,27 @@ var gaunlet=[];
 function Gaunlet(x,y) {
    this.x=x;
    this.y=y;
+   this.click=0;
    this.draw=function () {
-     c.drawImage(imgp,0,0,512,512,this.x,this.y,75,75);
+   //if (this.click<1) {
+      c.drawImage(imgp,0,0,512,512,this.x,this.y,75,75);
+   // }
+     
    }
 }
 //init gaunlet
-var time2=5;
+var time2=30;
 function initgaunlet() {
   if (seconds==time2) {
     var gx=getRandomNumber(75,canvas.width-75);
     var gy=getRandomNumber(75,canvas.height-75);
 
    gaunlet.push(new Gaunlet(gx,gy));
-    time2+=8;
-    if (time2>60) {
-      time2=0;
+    time2+=30;
+    if (time2==60) {
+      time2=30;
     }
-
+ 
   }
 }
 
@@ -502,19 +501,23 @@ function animate() {
    c.fill();
    initrb();
    initgaunlet();
+  gaunlet.forEach(gaunlet => {
+   gaunlet.draw();
+   })
+   
+  rockbubble.forEach(rockbubble => {
+   rockbubble.update();
+   })
    particles.forEach(particle => {
    particle.update(particles);
    })
-   rockbubble.forEach(rockbubble => {
-   rockbubble.update();
-   })
-   gaunlet.forEach(gaunlet => {
-   gaunlet.draw();
-   })
+  
+  
+  
    dangerzone();
    dangerzonetime();
    gameover();
-
+  
 
 
 

@@ -112,58 +112,6 @@ function pause() {
   }
 
 }
-
-
-
-// Objects
-function Particle(x, y, radius, color) {
- this.x = x;
- this.y = y;
- this.radius = radius;
- this.color = color;
- this.velocity = {
- x: (Math.random() - 0.5)*8, // Random x value from -0.5 to 0.5
- y: (Math.random() - 0.5)*8 // Random y value from -0.5 to 0.5
- }
- this.mass=1;
- this.update=function(particles) {
-   this.draw()
-   for (var i = 0; i < particles.length; i++) {
-     if (this===particles[i]) continue;
-
-
-
-     if (distancebwpoints(this.x,this.y,particles[i].x,particles[i].y)< this.radius+particles[i].radius) {
-        resolveCollision(this,particles[i]);
-
-
-     }
-
-   }
-   if (this.x-this.radius<=0 || this.x+this.radius>=canvas.width) {
-     this.velocity.x=-this.velocity.x;
-
-   }
-   if (this.y-this.radius<=0 || this.y+this.radius>=canvas.height) {
-     this.velocity.y=-this.velocity.y;
-
-   }
-
-    this.x += this.velocity.x // Move x coordinate
-    this.y += this.velocity.y // Move y coordinate
-
- }
- this.draw=function () {
-   c.save();
-   c.beginPath();
-   c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-   c.fillStyle = this.color;
-   c.fill();
-   c.closePath();
-   c.restore();
-
- }
-}
 //collision code
 
 function rotate(velocity, angle) {
@@ -242,6 +190,59 @@ function newbubble() {
 
 }
 
+
+
+
+// Objects
+function Particle(x, y, radius, color) {
+ this.x = x;
+ this.y = y;
+ this.radius = radius;
+ this.color = color;
+ this.velocity = {
+ x: (Math.random() - 0.5)*8, // Random x value from -0.5 to 0.5
+ y: (Math.random() - 0.5)*8 // Random y value from -0.5 to 0.5
+ }
+ this.mass=1;
+ this.update=function(particles) {
+   this.draw()
+   for (var i = 0; i < particles.length; i++) {
+     if (this===particles[i]) continue;
+
+
+
+     if (distancebwpoints(this.x,this.y,particles[i].x,particles[i].y)< this.radius+particles[i].radius) {
+        resolveCollision(this,particles[i]);
+
+
+     }
+
+   }
+   if (this.x-this.radius<=0 || this.x+this.radius>=canvas.width) {
+     this.velocity.x=-this.velocity.x;
+
+   }
+   if (this.y-this.radius<=0 || this.y+this.radius>=canvas.height) {
+     this.velocity.y=-this.velocity.y;
+
+   }
+
+    this.x += this.velocity.x // Move x coordinate
+    this.y += this.velocity.y // Move y coordinate
+
+ }
+ this.draw=function () {
+   c.save();
+   c.beginPath();
+   c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+   c.fillStyle = this.color;
+   c.fill();
+   c.closePath();
+   c.restore();
+
+ }
+}
+
 // Implementation
 let particles=[];
 var num=8;//max-20
@@ -288,8 +289,9 @@ function dangerzone() {
 //dangerzone time
 function dangerzonetime() {
   if (particles.length==20) {
-    interval1=window.setInterval(stopwatch,1000);
     dangerzonetime=function() {}
+
+    interval1=window.setInterval(stopwatch,1000);
 
 
 

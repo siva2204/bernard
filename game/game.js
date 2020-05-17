@@ -44,6 +44,13 @@ canvas.addEventListener("click",function() {
 
        }
   }
+  for (var i = 0; i < rockbubble.length; i++) {
+    if (distancebwpoints(rockbubble[i].x,rockbubble[i].y,mouse.x,mouse.y)<135 && mouse.x>rockbubble[i].x && mouse.y>rockbubble[i].y) {
+      rockbubble[i].click++;
+      beep.play();
+
+    }
+  }
 
 });
 
@@ -54,6 +61,13 @@ canvas.addEventListener("ontouchend",function() {
            beep.play();
 
        }
+  }
+  for (var i = 0; i < rockbubble.length; i++) {
+    if (distancebwpoints(rockbubble[i].x,rockbubble[i].y,mouse.x,mouse.y)<135 && mouse.x>rockbubble[i].x && mouse.y>rockbubble[i].y) {
+      rockbubble[i].click++;
+      beep.play();
+
+    }
   }
 
 
@@ -263,6 +277,91 @@ function Particle(x, y, radius, color) {
  }
 }
 
+//rockbubble
+
+var rockbubble=[];
+var speed2=8;
+var asteriod=new Image();
+asteriod.src="asteroid.png";
+function Rockbubble(x,y){
+  this.x=x;
+  this.y=y;
+  this.vx=(Math.random() - 0.5)*speed2;
+  this.vy=(Math.random() - 0.5)*speed2;
+  this.click=0;
+  this.draw=function(){
+    c.drawImage(asteriod,0,0,577,481,this.x,this.y,120,100);
+  }
+  this.update=function () {
+   if (this.click<5) {
+     this.draw();
+    this.x+=this.vx;
+    this.y+=this.vy;
+    if (this.x<0 || this.x+120>canvas.width) {
+       this.vx=-this.vx;
+    }
+    if (this.y<0 || this.y+100>canvas.height) {
+      this.vy=-this.vy;
+    }
+   }
+
+
+  }
+
+}
+//init rock bubble
+var time=20;
+function initrb() {
+  if (seconds==time) {
+    var sx=getRandomNumber(100,canvas.width-100);
+    var sy=getRandomNumber(100,canvas.width-100);
+
+    rockbubble.push(new Rockbubble(sx,sy));
+    time+=10
+    if (time==60) {
+      time=0;
+    }
+
+
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//gaunlet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Implementation
 let particles=[];
 var num=8;//max-20
@@ -371,8 +470,12 @@ function animate() {
    c.fillStyle ="#f6f6ee";
    c.fillRect(0, 0,canvas.width,canvas.height);
    c.fill();
+   initrb();
    particles.forEach(particle => {
    particle.update(particles);
+   })
+   rockbubble.forEach(rockbubble => {
+   rockbubble.update();
    })
    dangerzone();
    dangerzonetime();

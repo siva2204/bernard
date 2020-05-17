@@ -313,8 +313,8 @@ function Rockbubble(x,y){
 var time=20;
 function initrb() {
   if (seconds==time) {
-    var sx=getRandomNumber(100,canvas.width-100);
-    var sy=getRandomNumber(100,canvas.width-100);
+    var sx=getRandomNumber(120,canvas.width-120);
+    var sy=getRandomNumber(100,canvas.height-100);
 
     rockbubble.push(new Rockbubble(sx,sy));
     time+=10

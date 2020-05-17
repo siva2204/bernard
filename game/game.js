@@ -51,6 +51,11 @@ canvas.addEventListener("click",function() {
 
     }
   }
+  for (var i = 0; i < gaunlet.length; i++) {
+    if (distancebwpoints(gaunlet[i].x,gaunlet[i].x,mouse.x,mouse.y)<100 && mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y ) {
+       gaunlet.splice(i,1);
+    }
+  }
 
 });
 
@@ -67,6 +72,11 @@ canvas.addEventListener("ontouchend",function() {
       rockbubble[i].click++;
       beep.play();
 
+    }
+  }
+   for (var i = 0; i < gaunlet.length; i++) {
+    if (distancebwpoints(gaunlet[i].x,gaunlet[i].x,mouse.x,mouse.y)<100 && mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y ) {
+       gaunlet.splice(i,1);
     }
   }
 
@@ -327,25 +337,45 @@ function initrb() {
   
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //gaunlet
+var imgp=new Image();
+imgp.src="snap.png"
+var gaunlet=[];
+function Gaunlet(x,y) {
+   this.x=x;
+   this.y=y;
+   this.draw=function () {
+     c.drawImage(imgp,0,0,512,512,this.x,this.y,75,75);
+   }
+}
+//init gaunlet
+var time2=5;
+function initgaunlet() {
+  if (seconds==time2) {
+    var gx=getRandomNumber(75,canvas.width-75);
+    var gy=getRandomNumber(75,canvas.height-75);
+
+   gaunlet.push(new Gaunlet(gx,gy));
+    time2+=8;
+    if (time2>60) {
+      time2=0;
+    }
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -471,11 +501,15 @@ function animate() {
    c.fillRect(0, 0,canvas.width,canvas.height);
    c.fill();
    initrb();
+   initgaunlet();
    particles.forEach(particle => {
    particle.update(particles);
    })
    rockbubble.forEach(rockbubble => {
    rockbubble.update();
+   })
+   gaunlet.forEach(gaunlet => {
+   gaunlet.draw();
    })
    dangerzone();
    dangerzonetime();

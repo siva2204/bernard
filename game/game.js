@@ -317,8 +317,8 @@ function initrb() {
     var sy=getRandomNumber(100,canvas.height-100);
 
     rockbubble.push(new Rockbubble(sx,sy));
-    time+=10
-    if (time==60) {
+    time+=8;
+    if (time>60) {
       time=0;
     }
 

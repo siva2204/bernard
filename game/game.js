@@ -12,10 +12,22 @@ var gamepause=false;
 var interval;
 var interval1;
 var interval2;
+var colors=["#ff3333","#ff7733","#ffb31a","#b8b894","#ff66ff","#4da6ff","#5cd65c","#009999","#ffff33","#ff4dff"," #c61aff","#ffa366","#4d4d00"];
 var mouse = {
  x: undefined,
  y: undefined
 }
+//sound effects
+var beep=new Audio();
+beep.src="bubble.mp3"
+
+var myAudio = new Audio('background.mp3');
+myAudio.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+
+  myAudio.play();
 // Event Listeners
 addEventListener('mousemove', event => {
    var rect = canvas.getBoundingClientRect();
@@ -28,6 +40,7 @@ canvas.addEventListener("click",function() {
   for (var i = 0; i < particles.length; i++) {
        if (distancebwpoints(particles[i].x,particles[i].y,mouse.x,mouse.y)<particles[i].radius) {
            particles.splice(i,1);
+           beep.play();
 
        }
   }
@@ -38,6 +51,7 @@ canvas.addEventListener("ontouchend",function() {
   for (var i = 0; i < particles.length; i++) {
        if (distancebwpoints(particles[i].x,particles[i].y,mouse.x,mouse.y)<particles[i].radius) {
            particles.splice(i,1);
+           beep.play();
 
        }
   }
@@ -91,6 +105,10 @@ function start() {
 function addbubble(){
   newbubble();
   speed+=0.25;
+  for (var i = 0; i < particles.length; i++) {
+    particles[i].color= colors[Math.floor(Math.random() * colors.length)];
+  }
+ 
 }
 //pause
 function pause() {
@@ -169,8 +187,8 @@ function newbubble() {
     var radius =getRandomNumber(40,60);
     var x = getRandomNumber(radius,canvas.width-radius);
     var y = getRandomNumber(radius,canvas.height-radius);
-    //getRandomNumber(60,70);
-    var color ="#0069cc";
+    
+    var color =colors[Math.floor(Math.random() * colors.length)];
 
       for (var j = 0; j < particles.length; j++) {
         if (distancebwpoints(x,y,particles[j].x,particles[j].y)< radius*2) {
@@ -254,7 +272,7 @@ function init() {
  var x = getRandomNumber(radius,canvas.width-radius);
  var y = getRandomNumber(radius,canvas.height-radius);
 
- var color = '#0069cc';
+ var color = colors[Math.floor(Math.random() * colors.length)];
  if (i !==0) {
    for (var j = 0; j < particles.length; j++) {
      if (distancebwpoints(x,y,particles[j].x,particles[j].y)< radius*2) {
@@ -350,7 +368,7 @@ function gameover() {
 function animate() {
  requestAnimationFrame(animate);// Create an animation loop
  if (!gamepause) {
-   c.fillStyle ="rgba(204, 230, 255)";
+   c.fillStyle ="#f6f6ee";
    c.fillRect(0, 0,canvas.width,canvas.height);
    c.fill();
    particles.forEach(particle => {

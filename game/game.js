@@ -26,6 +26,9 @@ beep.src="bubble.mp3"
 var boom=new Audio();
 boom.src="boom.mp3"
 
+var beep1= new Audio();
+beep1.src="final.mp3"
+
 var myAudio = new Audio('background.mp3');
 myAudio.addEventListener('ended', function() {
     this.currentTime = 0;
@@ -65,13 +68,17 @@ canvas.addEventListener("click",function () {
   for (var i = 0; i < gaunlet.length; i++) {
       if (mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y) {
         if(distancebwpoints(gaunlet[i].x,gaunlet[i].y,mouse.x,mouse.y)<75){
-          screen=true;
+          gamepause=true;
+          
+          window.setTimeout(function(){
+            gamepause=false;
+          },400)
           gaunlet.splice(i,1);
+          beep1.play();
          
           particles.splice(0,particles.length/2);
-          rockbubble.splice(0,rockbubble.length/2);
-          screen=false;
-
+          rockbubble.splice(0,rockbubble.length);
+         
         } 
 
       }
@@ -528,11 +535,7 @@ function animate() {
    particles.forEach(particle => {
    particle.update(particles);
    })
-   if (screen) {
-    c.fillStyle="white";
-    c.fillRect(0,0,canvas.width,canvas.height);
-    c.fill;
-   }
+
   
   
   

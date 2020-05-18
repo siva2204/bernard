@@ -61,6 +61,7 @@ canvas.addEventListener("click",function() {
       rockbubble[i].click++;
       if (rockbubble[i].click==5) {
          rockbubble.splice(i,1);
+         
       }
      
       boom.play();

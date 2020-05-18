@@ -44,7 +44,7 @@ addEventListener('mousemove', event => {
    var rect = canvas.getBoundingClientRect();
    mouse.x = event.clientX-rect.left;
    mouse.y = event.clientY-rect.top;
- //console.log(mouse.x,mouse.y);
+ 
 })
 
 canvas.addEventListener("click",function() {
@@ -221,7 +221,7 @@ function resolveCollision(particle, otherParticle) {
 }
 // new BUBBLE
 function newbubble() {
-  console.log("varen");
+  
   if (particles.length<20) {
     var radius =getRandomNumber(40,60);
     var x = getRandomNumber(radius,canvas.width-radius);
@@ -459,7 +459,7 @@ recordtimes1=JSON.parse(localStorage.getItem("times0"));
 //danger ZONE
 function dangerzone() {
   if (particles.length==20) {
-    //console.log("dangerzone");
+    
     document.getElementById("canvas").style.border="5px solid red";
 
 

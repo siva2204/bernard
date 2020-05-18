@@ -29,6 +29,9 @@ boom.src="boom.mp3"
 var beep1= new Audio();
 beep1.src="final.mp3"
 
+var beep2= new Audio();
+beep2.src="gameover.mp3"
+
 var myAudio = new Audio('background.mp3');
 myAudio.addEventListener('ended', function() {
     this.currentTime = 0;
@@ -69,7 +72,7 @@ canvas.addEventListener("click",function () {
       if (mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y) {
         if(distancebwpoints(gaunlet[i].x,gaunlet[i].y,mouse.x,mouse.y)<75){
           gamepause=true;
-          
+
           window.setTimeout(function(){
             gamepause=false;
           },400)
@@ -512,6 +515,7 @@ function gameover() {
 
 
   c.drawImage(img,0,0,800,600);
+  beep2.play();
 }
 
 }

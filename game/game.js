@@ -445,7 +445,7 @@ function init() {
 //localstorage
 var recordtimes1=[];
 
-recordtimes1=JSON.parse(localStorage.getItem("times"));
+recordtimes1=JSON.parse(localStorage.getItem("times0"));
  if (recordtimes1!=null) {
    recordtimes1.sort();
    
@@ -503,11 +503,11 @@ function gameover() {
   if (recordtimes1==null) {
           recordtimes1=[];  
         recordtimes1[recordtimes1.length]=document.getElementById('t').innerHTML;
-        localStorage.setItem("times",JSON.stringify(recordtimes1));
+        localStorage.setItem("times0",JSON.stringify(recordtimes1));
     }
   else{
           recordtimes1[recordtimes1.length]=document.getElementById('t').innerHTML;
-          localStorage.setItem("times",JSON.stringify(recordtimes1));
+          localStorage.setItem("times0",JSON.stringify(recordtimes1));
     }
       recordtimes1.sort();
 

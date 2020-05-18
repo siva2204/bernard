@@ -59,7 +59,10 @@ canvas.addEventListener("click",function() {
     if (distancebwpoints(rockbubble[i].x,rockbubble[i].y,mouse.x,mouse.y)<135 && mouse.x>rockbubble[i].x && mouse.y>rockbubble[i].y) {
       
       rockbubble[i].click++;
-      rockbubble.splice(i,1);
+      if (rockbubble[i].click==5) {
+         rockbubble.splice(i,1);
+      }
+     
       boom.play();
      
 

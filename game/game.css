@@ -24,7 +24,7 @@ body{
   width:800px;
   margin:15px auto 0px auto;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   cursor: pointer;
   font-family: 'Pangolin', cursive;
   color:black;

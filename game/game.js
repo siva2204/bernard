@@ -17,9 +17,14 @@ var mouse = {
  x: undefined,
  y: undefined
 }
+var screen=false;
+var ll=true;
 //sound effects
 var beep=new Audio();
 beep.src="bubble.mp3"
+
+var boom=new Audio();
+boom.src="boom.mp3"
 
 var myAudio = new Audio('background.mp3');
 myAudio.addEventListener('ended', function() {
@@ -46,8 +51,10 @@ canvas.addEventListener("click",function() {
   }
   for (var i = 0; i < rockbubble.length; i++) {
     if (distancebwpoints(rockbubble[i].x,rockbubble[i].y,mouse.x,mouse.y)<135 && mouse.x>rockbubble[i].x && mouse.y>rockbubble[i].y) {
+      
       rockbubble[i].click++;
-      beep.play();
+      boom.play();
+     
 
     }
   }
@@ -58,15 +65,12 @@ canvas.addEventListener("click",function () {
   for (var i = 0; i < gaunlet.length; i++) {
       if (mouse.x>gaunlet[i].x && mouse.y>gaunlet[i].y) {
         if(distancebwpoints(gaunlet[i].x,gaunlet[i].y,mouse.x,mouse.y)<75){
+          screen=true;
           gaunlet.splice(i,1);
-          c.save();
-          c.fillStyle="white";
-          c.fillRect(0,0,canvas.width,canvas.height);
-          c.fill();
-
-          c.restore();
+         
           particles.splice(0,particles.length/2);
           rockbubble.splice(0,rockbubble.length/2);
+          screen=false;
 
         } 
 
@@ -77,6 +81,7 @@ canvas.addEventListener("click",function () {
 
   
 })
+
 
 //random numbers
 function getRandomNumber(min, max) {
@@ -114,16 +119,20 @@ function stopwatch1(){
 
 }
 //start
+var rate=500;
 function start() {
-  interval=window.setInterval(addbubble,500);
+  interval=window.setInterval(addbubble,rate);
   interval2=window.setInterval(stopwatch1,1000);
 
 
 }
 //addbubble
 function addbubble(){
-  newbubble();
-  speed+=0.25;
+  if (ll==true) {
+     newbubble();
+  }
+ 
+  speed+=0.025;
   for (var i = 0; i < particles.length; i++) {
     particles[i].color= colors[Math.floor(Math.random() * colors.length)];
   }
@@ -141,7 +150,7 @@ function pause() {
 
   }
   else {
-   interval=window.setInterval(addbubble,500);
+   interval=window.setInterval(addbubble,rate);
    interval1=window.setInterval(stopwatch,1000);
    interval2=window.setInterval(stopwatch1,1000);
    document.getElementById("pause").innerHTML="PAUSE";
@@ -202,6 +211,7 @@ function resolveCollision(particle, otherParticle) {
 }
 // new BUBBLE
 function newbubble() {
+  console.log("varen");
   if (particles.length<20) {
     var radius =getRandomNumber(40,60);
     var x = getRandomNumber(radius,canvas.width-radius);
@@ -232,7 +242,7 @@ function newbubble() {
 
 
 // Objects
-var speed=4
+var speed=5;
 function Particle(x, y, radius, color) {
  this.x = x;
  this.y = y;
@@ -322,7 +332,13 @@ function initrb() {
     var sy=getRandomNumber(100,canvas.height-100);
 
     rockbubble.push(new Rockbubble(sx,sy));
-    time+=8;
+    if (ll==true) {
+       time+=8;
+    }
+    else{
+      time+=10;
+    }
+   
     if (time==60) {
       time=0;
     }
@@ -355,45 +371,44 @@ function initgaunlet() {
     var gy=getRandomNumber(75,canvas.height-75);
 
    gaunlet.push(new Gaunlet(gx,gy));
-    time2+=30;
-    if (time2==60) {
+    time2+=20;
+    if (time2>60) {
       time2=30;
     }
  
   }
 }
+//liquid luck
+ var interval5;
+ var numclick=0;
+function liquidluck() {
+  if (numclick<2) {
+     numclick++;
+     ll=false;
+    interval5= window.setInterval(function() {
+      if (ll==false) {
+         newbubble();
+      }
 
+     
+       
+     },1500);
+    window.setTimeout(function(){
+        window.clearInterval(interval5);
+        ll=true;
 
+      },5000);
 
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
+ 
+ 
+}
 
 // Implementation
 let particles=[];
-var num=8;//max-20
+var num=6;//max-20
 function init() {
  for (let i = 0; i <num; i++) {
  var radius =getRandomNumber(40,60);
@@ -484,6 +499,8 @@ function gameover() {
           recordtimes1[recordtimes1.length]=document.getElementById('t').innerHTML;
           localStorage.setItem("times",JSON.stringify(recordtimes1));
     }
+      recordtimes1.sort();
+
       document.getElementById("hs").innerHTML=recordtimes1[recordtimes1.length-1];
 
 
@@ -498,7 +515,7 @@ function animate() {
  if (!gamepause) {
    c.fillStyle ="#f6f6ee";
    c.fillRect(0, 0,canvas.width,canvas.height);
-   c.fill();
+   c.fill;
    initrb();
    initgaunlet();
   gaunlet.forEach(gaunlet => {
@@ -511,6 +528,11 @@ function animate() {
    particles.forEach(particle => {
    particle.update(particles);
    })
+   if (screen) {
+    c.fillStyle="white";
+    c.fillRect(0,0,canvas.width,canvas.height);
+    c.fill;
+   }
   
   
   
